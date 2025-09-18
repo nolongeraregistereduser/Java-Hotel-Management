@@ -5,7 +5,7 @@ public interface ClientRepository {
 
     void save(Client client);
     Client findById(UUID clientId);
-    Client FindByEmail(String email);
+    Client findByEmail(String email);
     List<Client> findAll();
     void update(Client client);
     void delete(Client client);
