@@ -4,32 +4,31 @@ import java.util.Map;
 import java.util.Set;
 
 public class AuthService {
-    private final Map<String, String> credentials = new HashMap<>(); // username -> password
-    private final Set<String> loggedInUsers = new HashSet<>();
+    private final Map<String, String> credentials = new HashMap<>(); // email -> password
+    private final Set<String> loggedInEmails = new HashSet<>();
 
-    public boolean register(String username, String password) {
-        if (credentials.containsKey(username)) {
-            return false; // Username already exists
+    public boolean register(String email, String password) {
+        if (credentials.containsKey(email)) {
+            return false; // Email already exists
         }
-        credentials.put(username, password);
+        credentials.put(email, password);
         return true;
     }
 
-    public boolean login(String username, String password) {
-        String storedPassword = credentials.get(username);
+    public boolean login(String email, String password) {
+        String storedPassword = credentials.get(email);
         if (storedPassword != null && storedPassword.equals(password)) {
-            loggedInUsers.add(username);
+            loggedInEmails.add(email);
             return true;
         }
         return false;
     }
 
-    public boolean logout(String username) {
-        return loggedInUsers.remove(username);
+    public boolean logout(String email) {
+        return loggedInEmails.remove(email);
     }
 
-    public boolean isLoggedIn(String username) {
-        return loggedInUsers.contains(username);
+    public boolean isLoggedIn(String email) {
+        return loggedInEmails.contains(email);
     }
 }
-

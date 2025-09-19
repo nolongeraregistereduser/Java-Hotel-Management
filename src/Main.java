@@ -5,10 +5,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         AuthService authService = new AuthService();
         boolean running = true;
-        String currentUser = null;
+        String currentEmail = null;
 
         while (running) {
-            if (currentUser == null) {
+            if (currentEmail == null) {
                 // Menu for not logged-in users
                 System.out.println("\n=== MENU PRINCIPAL ===");
                 System.out.println("1. Register (Inscription)");
@@ -23,30 +23,30 @@ public class Main {
                 switch (choice) {
                     case 1:
                         System.out.println("➡ Vous avez choisi : Inscription");
-                        System.out.print("Entrez le nom d'utilisateur : ");
-                        String regUsername = scanner.nextLine();
+                        System.out.print("Entrez l'email : ");
+                        String regEmail = scanner.nextLine();
                         System.out.print("Entrez le mot de passe : ");
                         String regPassword = scanner.nextLine();
-                        boolean registered = authService.register(regUsername, regPassword);
+                        boolean registered = authService.register(regEmail, regPassword);
                         if (registered) {
                             System.out.println("Inscription réussie !");
                         } else {
-                            System.out.println("Nom d'utilisateur déjà utilisé.");
+                            System.out.println("Email déjà utilisé.");
                         }
                         break;
 
                     case 2:
                         System.out.println("➡ Vous avez choisi : Connexion");
-                        System.out.print("Entrez le nom d'utilisateur : ");
-                        String loginUsername = scanner.nextLine();
+                        System.out.print("Entrez l'email : ");
+                        String loginEmail = scanner.nextLine();
                         System.out.print("Entrez le mot de passe : ");
                         String loginPassword = scanner.nextLine();
-                        boolean loggedIn = authService.login(loginUsername, loginPassword);
+                        boolean loggedIn = authService.login(loginEmail, loginPassword);
                         if (loggedIn) {
-                            currentUser = loginUsername;
-                            System.out.println("Connexion réussie ! Bienvenue, " + currentUser + ".");
+                            currentEmail = loginEmail;
+                            System.out.println("Connexion réussie ! Bienvenue, " + currentEmail + ".");
                         } else {
-                            System.out.println("Nom d'utilisateur ou mot de passe incorrect.");
+                            System.out.println("Email ou mot de passe incorrect.");
                         }
                         break;
 
@@ -71,10 +71,10 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        boolean loggedOut = authService.logout(currentUser);
+                        boolean loggedOut = authService.logout(currentEmail);
                         if (loggedOut) {
-                            System.out.println("Déconnexion réussie. À bientôt, " + currentUser + "!");
-                            currentUser = null;
+                            System.out.println("Déconnexion réussie. À bientôt, " + currentEmail + "!");
+                            currentEmail = null;
                         } else {
                             System.out.println("Erreur lors de la déconnexion.");
                         }
