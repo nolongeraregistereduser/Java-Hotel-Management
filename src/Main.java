@@ -73,13 +73,30 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        // TODO: Afficher tous les hôtels
+                        HotelRepository hotelRepo = new InMemoryHotelRepository();
+                        System.out.println("Liste des hôtels :");
+                        for (Hotel hotel : hotelRepo.findAll()) {
+                            System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
+                        }
                         break;
                     case 2:
-                        // TODO: Afficher les hôtels disponibles
+                        HotelRepository hotelRepo2 = new InMemoryHotelRepository();
+                        System.out.println("Hôtels disponibles :");
+                        for (Hotel hotel : hotelRepo2.findByAvailability(true)) {
+                            System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
+                        }
                         break;
                     case 3:
-                        // TODO: Rechercher des hôtels par note
+                        System.out.print("Entrez la note minimale (0.0 - 5.0) : ");
+                        double minRating = scanner.nextDouble();
+                        scanner.nextLine(); // pour consommer le retour chariot
+                        HotelRepository hotelRepo3 = new InMemoryHotelRepository();
+                        System.out.println("Hôtels avec une note minimale de " + minRating + " :");
+                        for (Hotel hotel : hotelRepo3.findAll()) {
+                            if (hotel.getRating() >= minRating) {
+                                System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
+                            }
+                        }
                         break;
                     case 4:
                         boolean loggedOut = authService.logout(currentEmail);
