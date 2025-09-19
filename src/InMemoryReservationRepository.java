@@ -14,22 +14,25 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public Reservation find(UUID reservationId) {
-        return null;
+        return store.get(reservationId);
     }
 
     @Override
     public List<Reservation> findAll() {
-        return List.of();
+        return List.copyOf(store.values());
     }
 
     @Override
     public List<Reservation> findByClient(UUID clientId) {
-        return List.of();
+        return null;
+        //return store.values().stream().filter(reservation -> reservation.getClientId().equals(clientId));
     }
 
     @Override
     public List<Reservation> findByHotel(UUID hotelId) {
-        return List.of();
+        return null;
+       // return store.values().stream().filter(reservation -> reservation.getHottelid()
+
     }
 
     @Override
@@ -42,8 +45,5 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     }
 
-    @Override
-    public Reservation findById(UUID id) {
-        return store.get(id);
-    }
+
 }

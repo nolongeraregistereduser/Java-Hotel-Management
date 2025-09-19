@@ -49,10 +49,10 @@ public class Hotel {
     }
 
     public boolean isAvailable() {
-        if(availableRooms <= 0){
-            return false;
+        if(availableRooms  > 0){
+            return true;
         }
-        return true;
+        return false;
     }
 
     }

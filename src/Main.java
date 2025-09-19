@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        AuthService authService = new AuthService();
         boolean running = true;
 
         while (running) {
@@ -20,12 +21,30 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("➡ Vous avez choisi : Inscription");
-                    // TODO : Appeler AuthService.register()
+                    System.out.print("Entrez le nom d'utilisateur : ");
+                    String regUsername = scanner.nextLine();
+                    System.out.print("Entrez le mot de passe : ");
+                    String regPassword = scanner.nextLine();
+                    boolean registered = authService.register(regUsername, regPassword);
+                    if (registered) {
+                        System.out.println("Inscription réussie !");
+                    } else {
+                        System.out.println("Nom d'utilisateur déjà utilisé.");
+                    }
                     break;
 
                 case 2:
                     System.out.println("➡ Vous avez choisi : Connexion");
-                    // TODO : Appeler AuthService.login()
+                    System.out.print("Entrez le nom d'utilisateur : ");
+                    String loginUsername = scanner.nextLine();
+                    System.out.print("Entrez le mot de passe : ");
+                    String loginPassword = scanner.nextLine();
+                    boolean loggedIn = authService.login(loginUsername, loginPassword);
+                    if (loggedIn) {
+                        System.out.println("Connexion réussie !");
+                    } else {
+                        System.out.println("Nom d'utilisateur ou mot de passe incorrect.");
+                    }
                     break;
 
                 case 3:
