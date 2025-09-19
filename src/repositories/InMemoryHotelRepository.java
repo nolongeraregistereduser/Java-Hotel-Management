@@ -1,8 +1,12 @@
+package repositories;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import models.Hotel;
+import models.Reservation;
+
 
 public class InMemoryHotelRepository implements HotelRepository {
     private final Map<UUID, Hotel> store = new HashMap<>();

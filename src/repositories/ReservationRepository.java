@@ -1,3 +1,6 @@
+package repositories;
+import models.Reservation;
+
 import java.util.List;
 import java.util.UUID;
 

@@ -1,5 +1,7 @@
+package repositories;
 import java.util.List;
 import java.util.UUID;
+import models.Client;
 
 public interface ClientRepository {
 

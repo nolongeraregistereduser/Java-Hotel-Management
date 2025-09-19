@@ -1,7 +1,11 @@
+package repositories;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import models.Client;
+
 
 
 public class InMemoryClientRepository implements ClientRepository {

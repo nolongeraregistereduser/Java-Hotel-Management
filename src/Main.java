@@ -1,3 +1,8 @@
+import models.Hotel;
+import repositories.HotelRepository;
+import repositories.InMemoryHotelRepository;
+import services.AuthService;
+
 import java.util.Scanner;
 
 public class Main {
