@@ -71,18 +71,21 @@ public class Main {
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // pour consommer le retour chariot
 
+                // initialiser inmemoryhotelrepository ici pour éviter de le faire plusieurs fois
+                HotelRepository hotelRepoInit = new InMemoryHotelRepository();
+
+                // Traitement du choix
+
                 switch (choice) {
                     case 1:
-                        HotelRepository hotelRepo = new InMemoryHotelRepository();
                         System.out.println("Liste des hôtels :");
-                        for (Hotel hotel : hotelRepo.findAll()) {
+                        for (Hotel hotel : hotelRepoInit.findAll()) {
                             System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                         }
                         break;
                     case 2:
-                        HotelRepository hotelRepo2 = new InMemoryHotelRepository();
                         System.out.println("Hôtels disponibles :");
-                        for (Hotel hotel : hotelRepo2.findByAvailability(true)) {
+                        for (Hotel hotel : hotelRepoInit.findByAvailability(true)) {
                             System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                         }
                         break;
@@ -90,9 +93,8 @@ public class Main {
                         System.out.print("Entrez la note minimale (0.0 - 5.0) : ");
                         double minRating = scanner.nextDouble();
                         scanner.nextLine(); // pour consommer le retour chariot
-                        HotelRepository hotelRepo3 = new InMemoryHotelRepository();
                         System.out.println("Hôtels avec une note minimale de " + minRating + " :");
-                        for (Hotel hotel : hotelRepo3.findAll()) {
+                        for (Hotel hotel : hotelRepoInit.findAll()) {
                             if (hotel.getRating() >= minRating) {
                                 System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                             }
