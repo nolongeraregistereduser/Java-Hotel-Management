@@ -59,11 +59,13 @@ public class Main {
                         System.out.println("Option invalide, veuillez réessayer.");
                 }
             } else {
-                // Menu for logged-in users
+                // Menu for logged-in users (client)
                 System.out.println("\n=== MENU UTILISATEUR CONNECTÉ ===");
-                System.out.println("1. Logout (Déconnexion)");
-                // Future: add more options for reservations, etc.
-                System.out.println("2. Exit (Quitter)");
+                System.out.println("1. Voir tous les hôtels");
+                System.out.println("2. Voir les hôtels disponibles");
+                System.out.println("3. Rechercher des hôtels par note");
+                System.out.println("4. Déconnexion");
+                System.out.println("5. Quitter");
                 System.out.print(" Choisissez une option : ");
 
                 int choice = scanner.nextInt();
@@ -71,6 +73,15 @@ public class Main {
 
                 switch (choice) {
                     case 1:
+                        // TODO: Afficher tous les hôtels
+                        break;
+                    case 2:
+                        // TODO: Afficher les hôtels disponibles
+                        break;
+                    case 3:
+                        // TODO: Rechercher des hôtels par note
+                        break;
+                    case 4:
                         boolean loggedOut = authService.logout(currentEmail);
                         if (loggedOut) {
                             System.out.println("Déconnexion réussie. À bientôt, " + currentEmail + "!");
@@ -79,12 +90,10 @@ public class Main {
                             System.out.println("Erreur lors de la déconnexion.");
                         }
                         break;
-
-                    case 2:
+                    case 5:
                         System.out.println("Merci, au revoir !");
                         running = false;
                         break;
-
                     default:
                         System.out.println("Option invalide, veuillez réessayer.");
                 }

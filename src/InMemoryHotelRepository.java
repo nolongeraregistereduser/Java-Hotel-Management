@@ -9,7 +9,7 @@ public class InMemoryHotelRepository implements HotelRepository {
 
     public InMemoryHotelRepository() {
         // Hardcoded Moroccan hotels for testing
-        save(new Hotel(UUID.randomUUID(), "La Mamounia", 10, 4.8));
+        save(new Hotel(UUID.randomUUID(), "La Mamounia", 0, 4.8));
         save(new Hotel(UUID.randomUUID(), "Royal Mansour", 5, 4.9));
         save(new Hotel(UUID.randomUUID(), "Four Seasons Resort Marrakech", 8, 4.7));
         save(new Hotel(UUID.randomUUID(), "Sofitel Casablanca Tour Blanche", 12, 4.5));
