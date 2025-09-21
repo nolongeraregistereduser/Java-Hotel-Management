@@ -3,6 +3,7 @@ import repositories.HotelRepository;
 import repositories.InMemoryHotelRepository;
 import repositories.InMemoryClientRepository;
 import services.AuthService;
+import services.ReservationService;
 
 import java.util.Scanner;
 
@@ -73,6 +74,7 @@ public class Main {
                 System.out.println("3. Rechercher des hôtels par note");
                 System.out.println("4. Déconnexion");
                 System.out.println("5. Quitter");
+                System.out.println("6 : Réserver une chambre dans un hotel ? ");
                 System.out.print(" Choisissez une option : ");
 
                 int choice = scanner.nextInt();
@@ -119,6 +121,26 @@ public class Main {
                     case 5:
                         System.out.println("Merci, au revoir !");
                         running = false;
+                        break;
+                    case 6:
+                        System.out.println("Liste des hotels disponible : ");
+                        for (Hotel hotel : hotelRepoInit.findByAvailability(true)) {
+                            System.out.println(" Numero "+ hotel.getHotelId() + "- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
+                        }
+                        System.out.println("Entrez l'ID de l'hôtel où vous souhaitez réserver une chambre : ");
+                        String hotelIdStr = scanner.nextLine();
+                        System.out.println("Entrez le nombre de nuits pour la réservation : ");
+                        int nights = scanner.nextInt();
+                        scanner.nextLine(); // pour consommer le retour chariot
+                        // Appel du service de réservation ici (à implémenter)
+                        ReservationService reservationService = new ReservationService(authService, null);
+                        boolean reservationSuccess = reservationService.makeReservation(currentEmail, authService.getClientRepository().findByEmail(currentEmail).getPassword(), java.util.UUID.fromString(hotelIdStr), nights);
+                        if (reservationSuccess) {
+                            System.out.println("Réservation réussie !");
+                        } else {
+                            System.out.println("Échec de la réservation. Veuillez vérifier les informations et réessayer.");
+                        }
+
                         break;
                     default:
                         System.out.println("Option invalide, veuillez réessayer.");

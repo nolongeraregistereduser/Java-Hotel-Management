@@ -11,11 +11,13 @@ public class Reservation {
     private String clientId;
     private int nights;
 
-    public Reservation(UUID reservationId, Instant timesap, String hottelid, String clientId, int nights) {
+
+
+    public Reservation(UUID reservationId, Instant now, UUID hotelId, UUID clientId, int nights) {
         this.reservationId = reservationId;
-        this.timesap = timesap;
-        this.hottelid = hottelid;
-        this.clientId = clientId;
+        this.timesap = now;
+        this.hottelid = hotelId.toString();
+        this.clientId = clientId.toString();
         this.nights = nights;
     }
 

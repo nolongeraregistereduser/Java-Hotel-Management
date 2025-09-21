@@ -1,4 +1,5 @@
 package services;
+import repositories.ClientRepository;
 import repositories.InMemoryClientRepository;
 import models.Client;
 import java.util.HashSet;
@@ -39,4 +40,10 @@ public class AuthService {
     public boolean isLoggedIn(String email) {
         return loggedInEmails.contains(email);
     }
+
+    public ClientRepository getClientRepository() {
+        return  clientRepository;
+    }
+
+
 }
