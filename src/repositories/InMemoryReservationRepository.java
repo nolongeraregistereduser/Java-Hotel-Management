@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class InMemoryReservationRepository implements ReservationRepository {
 
@@ -27,15 +28,16 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public List<Reservation> findByClient(UUID clientId) {
-        return null;
-        //return store.values().stream().filter(reservation -> reservation.getClientId().equals(clientId));
+        return store.values().stream()
+            .filter(reservation -> reservation.getClientId().equals(clientId.toString()))
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<Reservation> findByHotel(UUID hotelId) {
-        return null;
-       // return store.values().stream().filter(reservation -> reservation.getHottelid()
-
+        return store.values().stream()
+            .filter(reservation -> reservation.getHottelid().equals(hotelId.toString()))
+            .collect(Collectors.toList());
     }
 
     @Override
