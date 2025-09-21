@@ -16,6 +16,7 @@ public class Main {
         AuthService authService = new AuthService(clientRepository);
         InMemoryReservationRepository reservationRepository = new InMemoryReservationRepository();
         ReservationService reservationService = new ReservationService(authService, reservationRepository);
+        InMemoryHotelRepository hotelRepository = new InMemoryHotelRepository();
         boolean running = true;
         String currentEmail = null;
 
@@ -84,20 +85,16 @@ public class Main {
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // pour consommer le retour chariot
 
-                HotelRepository hotelRepoInit = new InMemoryHotelRepository();
-
-                // Traitement du choix
-
                 switch (choice) {
                     case 1:
                         System.out.println("Liste des hôtels :");
-                        for (Hotel hotel : hotelRepoInit.findAll()) {
+                        for (Hotel hotel : hotelRepository.findAll()) {
                             System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                         }
                         break;
                     case 2:
                         System.out.println("Hôtels disponibles :");
-                        for (Hotel hotel : hotelRepoInit.findByAvailability(true)) {
+                        for (Hotel hotel : hotelRepository.findByAvailability(true)) {
                             System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                         }
                         break;
@@ -106,7 +103,7 @@ public class Main {
                         double minRating = scanner.nextDouble();
                         scanner.nextLine(); // pour consommer le retour chariot
                         System.out.println("Hôtels avec une note minimale de " + minRating + " :");
-                        for (Hotel hotel : hotelRepoInit.findAll()) {
+                        for (Hotel hotel : hotelRepository.findAll()) {
                             if (hotel.getRating() >= minRating) {
                                 System.out.println("- " + hotel.getAddress() + " | Chambres disponibles: " + hotel.getAvailableRooms() + " | Note: " + hotel.getRating());
                             }
@@ -126,7 +123,7 @@ public class Main {
                         running = false;
                         break;
                     case 6:
-                        List<Hotel> availableHotels = hotelRepoInit.findByAvailability(true);
+                        List<Hotel> availableHotels = hotelRepository.findByAvailability(true);
                         if (availableHotels.isEmpty()) {
                             System.out.println("Aucun hôtel disponible pour réservation.");
                             break;
@@ -149,6 +146,8 @@ public class Main {
                         scanner.nextLine();
                         boolean reservationSuccess = reservationService.makeReservation(currentEmail, selectedHotel.getHotelId(), nights);
                         if (reservationSuccess) {
+                            selectedHotel.setAvailableRooms(selectedHotel.getAvailableRooms() - 1);
+                            hotelRepository.update(selectedHotel);
                             System.out.println("Réservation réussie !");
                         } else {
                             System.out.println("Échec de la réservation. Veuillez vérifier les informations et réessayer.");
@@ -159,7 +158,6 @@ public class Main {
                 }
             }
         }
-
         scanner.close();
     }
 }

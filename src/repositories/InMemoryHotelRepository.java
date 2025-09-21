@@ -48,6 +48,7 @@ public class InMemoryHotelRepository implements HotelRepository {
 
     @Override
     public void update(Hotel hotel) {
+        // Update the hotel in the map by its ID
         store.put(hotel.getHotelId(), hotel);
     }
 
