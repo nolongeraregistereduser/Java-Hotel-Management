@@ -1,25 +1,31 @@
 package services;
-import java.util.HashMap;
-
+import repositories.InMemoryClientRepository;
+import models.Client;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class AuthService {
-    private final Map<String, String> credentials = new HashMap<>(); // email -> password
+    private final InMemoryClientRepository clientRepository;
     private final Set<String> loggedInEmails = new HashSet<>();
 
+    public AuthService(InMemoryClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     public boolean register(String email, String password) {
-        if (credentials.containsKey(email)) {
+        if (clientRepository.findByEmail(email) != null) {
             return false; // Email already exists
         }
-        credentials.put(email, password);
+        // You can replace "Default Name" with a real name if you collect it during registration
+        Client client = new Client(UUID.randomUUID(), "Default Name", email, password);
+        clientRepository.save(client);
         return true;
     }
 
     public boolean login(String email, String password) {
-        String storedPassword = credentials.get(email);
-        if (storedPassword != null && storedPassword.equals(password)) {
+        Client client = clientRepository.findByEmail(email);
+        if (client != null && client.getPassword().equals(password)) {
             loggedInEmails.add(email);
             return true;
         }

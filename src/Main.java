@@ -1,6 +1,7 @@
 import models.Hotel;
 import repositories.HotelRepository;
 import repositories.InMemoryHotelRepository;
+import repositories.InMemoryClientRepository;
 import services.AuthService;
 
 import java.util.Scanner;
@@ -8,7 +9,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        AuthService authService = new AuthService();
+        InMemoryClientRepository clientRepository = new InMemoryClientRepository();
+        AuthService authService = new AuthService(clientRepository);
         boolean running = true;
         String currentEmail = null;
 
