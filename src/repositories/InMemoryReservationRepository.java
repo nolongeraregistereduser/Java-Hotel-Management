@@ -47,7 +47,7 @@ public class InMemoryReservationRepository implements ReservationRepository {
 
     @Override
     public void delete(UUID reservationId) {
-
+        store.remove(reservationId);
     }
 
 

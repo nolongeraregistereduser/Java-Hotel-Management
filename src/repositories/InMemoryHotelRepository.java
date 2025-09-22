@@ -58,4 +58,7 @@ public class InMemoryHotelRepository implements HotelRepository {
     }
 
 
+    public Hotel find(UUID uuid) {
+        return store.get(uuid);
+    }
 }

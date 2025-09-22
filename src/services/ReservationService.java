@@ -30,12 +30,17 @@ public class ReservationService {
 
 
 
-    public boolean cancelReservation(String email, String password) {
-        if (authService.login(email, password)) {
-            // Logic to find and delete a reservation
-            // reservationRepository.delete(reservationId);
-            return true;
+public boolean cancelReservation(UUID reservationId, String email) {
+        Client client = authService.getClientRepository().findByEmail(email);
+        if (client == null) return false;
+
+        Reservation reservation = reservationRepository.find(reservationId);
+        if (reservation == null || !reservation.getClientId().equals(client.getClientId().toString())) {
+            return false; // Reservation not found or does not belong to the client
         }
-        return false;
+
+        reservationRepository.delete(reservationId);
+
+        return true;
     }
 }

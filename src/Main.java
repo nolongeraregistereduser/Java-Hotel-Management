@@ -1,5 +1,5 @@
 import models.Hotel;
-import repositories.HotelRepository;
+import models.Reservation;
 import repositories.InMemoryHotelRepository;
 import repositories.InMemoryClientRepository;
 import repositories.InMemoryReservationRepository;
@@ -8,6 +8,7 @@ import services.ReservationService;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
@@ -80,6 +81,7 @@ public class Main {
                 System.out.println("4. Déconnexion");
                 System.out.println("5. Quitter");
                 System.out.println("6 : Réserver une chambre dans un hotel ? ");
+                System.out.println("Anuller un reservation");
                 System.out.print(" Choisissez une option : ");
 
                 int choice = scanner.nextInt();
@@ -152,6 +154,38 @@ public class Main {
                         } else {
                             System.out.println("Échec de la réservation. Veuillez vérifier les informations et réessayer.");
                         }
+                        break;
+                    case 7 :
+                        System.out.println("Choisissez la réservation à annuler");
+                        // Logic to display and cancel a reservation
+                        List<Reservation> reservations = reservationRepository.findByClient(clientRepository.findByEmail(currentEmail).getClientId());
+                        if (reservations.isEmpty()) {
+                            System.out.println("Aucune réservation trouvée.");
+                            break;
+                        }
+                        for (int i = 0; i < reservations.size(); i++) {
+
+                        System.out.println((i + 1) + ". Réservation ID: " + reservations.get(i).getReservationId() + " | Hôtel ID: " + reservations.get(i).getHottelid() + " | Nuits: " + reservations.get(i).getNights());
+                          }
+                        System.out.print("Entrez le numéro de la réservation à annuler : ");
+                        int resChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        if (resChoice < 1 || resChoice > reservations.size()) {
+                            System.out.println("Numéro de réservation invalide.");
+                            break;
+                        }
+
+                        boolean cancelSuccess = reservationService.cancelReservation(reservations.get(resChoice - 1).getReservationId(), currentEmail);
+                        if (!cancelSuccess) {
+                            System.out.println("Échec de l'annulation. Veuillez vérifier les informations et réessayer.");
+                            break;
+                        }
+                        Hotel hotel = hotelRepository.find(UUID.fromString(reservations.get(resChoice - 1).getHottelid()));
+                        if (hotel != null) {
+                            hotel.setAvailableRooms(hotel.getAvailableRooms() + 1);
+                            hotelRepository.update(hotel);
+                        }
+                        System.out.println("Annulation réussie !");
                         break;
                     default:
                         System.out.println("Option invalide, veuillez réessayer.");

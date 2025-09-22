@@ -41,6 +41,7 @@ public class Reservation {
         return hottelid;
     }
 
+
     public void setHottelid(String hottelid) {
         this.hottelid = hottelid;
     }
